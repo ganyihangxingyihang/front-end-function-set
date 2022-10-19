@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container {
+      display: flex;
+    }
+
+    .left,
+    .right {
+      flex: 1;
+    }
+
+    .imgBox {
+      border: 1px solid #ccc;
+    }
+
+    .imgBox img {
+      visibility: hidden;
+      width: 500px;
+      height: 500px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="left">
+      <canvas id="cas" width="500" height="500" style="border: 1px solid #ccc;"></canvas>
+      <br>
+      <button id="btn1">reset</button>
+    </div>
+    <div class="right">
+      <div class="imgBox">
+        <img src="" alt="" id="img">
+      </div>
+      <button id="btn2">生成图片</button>
+
+    </div>
+  </div>
+
+  <script>
+    let canvas = document.getElementById('cas')
+    let btn1 = document.getElementById('btn1')
+    let btn2 = document.getElementById('btn2')
+    let imgBox = document.getElementById('img')
+    let ctx = canvas.getContext('2d')
+    let isdrawing = false
+    canvas.onmousedown = function (e) {
+      isdrawing = true
+      ctx.moveTo(e.pageX, e.pageY)
+    }
+    canvas.onmousemove = function (e) {
+      if (isdrawing) {
+        ctx.lineTo(e.pageX, e.pageY)
+        ctx.stroke()
+      }
+    }
+    canvas.onmouseup = function () {
+      isdrawing = false
+    }
+    btn1.onclick = function () {
+      canvas.width = canvas.width
+      canvas.height = canvas.height
+    }
+
+    btn2.onclick = function () {
+      let src = canvas.toDataURL('image/png')
+      img.src = src
+      img.style.visibility = 'visible'
+    }
+  </script>
+</body>
+
+</html>
